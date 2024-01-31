@@ -1,6 +1,7 @@
 ﻿using BulkyWeb.Data;
 using BulkyWeb.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
 
 namespace BulkyWeb.Controllers
 {
@@ -81,6 +82,20 @@ namespace BulkyWeb.Controllers
                 return NotFound();
 
             return View(category);
+        }
+
+        [HttpPost, ActionName("Delete")]
+        public IActionResult DeletePOST(int? id)
+        {
+            Category? obj = _db.Categories.FirstOrDefault(c => c.Id == id);
+
+            if (obj == null)
+                return NotFound();
+
+            _db.Categories.Remove(obj);
+            _db.SaveChanges();
+
+            return RedirectToAction("Index");
         }
 
     }
