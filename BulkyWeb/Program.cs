@@ -32,3 +32,9 @@ app.Run();
 
 // 10:07:03
 // https://www.youtube.com/watch?v=AopeJjkcRvU&list=PLzIDxBBwUtRcbHbFqn_uUxzVA8koicoF8&index=14
+
+// Transient = New Service every time requested
+
+// Scoped = New Service once per request
+
+// Singleton = New Service once per lifetime
