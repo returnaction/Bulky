@@ -1,4 +1,5 @@
-﻿using BulkyWeb.Data;
+﻿
+using Bulky.DataAccessData;
 using BulkyWeb.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
