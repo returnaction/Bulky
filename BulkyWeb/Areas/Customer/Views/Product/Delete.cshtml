@@ -1,0 +1,65 @@
+﻿@using Bulky.Models.Models
+@model Product
+
+<div class="card shadow border-0 mt-4">
+    <div class="card-header bg-secondary bg-gradient m-lg-0 py-3">
+        <div class="row">
+            <div class="col-12 text-center">
+                <h2 class="text-white py-2">Delete Product?</h2>
+            </div>
+        </div>
+    </div>
+    <div class="card-body p-4">
+        <form method="post" asp-action="Delete">
+            <input asp-for="Id" hidden />
+            <div class="border-p3 mt-4">
+                <div class="mb-3 row">
+                    <label>Title</label>
+                    <input asp-for="Title" disabled  class="form-control" />
+                </div>
+
+                <div class="mb-3 row">
+                    <label>ISBN</label>
+                    <input asp-for="ISBN" disabled class="form-control" />
+                </div>
+                <div class="mb-3 row">
+                    <label>Author</label>
+                    <input asp-for="Author" disabled  class="form-control" />
+
+                </div>
+
+                <div class="mb-3 row">
+                    <label>Price</label>
+                    <input asp-for="Price" disabled  class="form-control" />
+
+                </div>
+
+                <div class="mb-3 row">
+                    <label>ListPrice</label>
+                    <input asp-for="ListPrice" disabled class="form-control" />
+
+                </div>
+
+                <div class="mb-3 row">
+                    <label>Price50</label>
+                    <input asp-for="Price50" disabled class="form-control" />
+
+                </div>
+                <div class="mb-3 row">
+                    <label>Price100</label>
+                    <input asp-for="Price100" disabled class="form-control" />
+                </div>
+
+                <div class="row">
+                    <div class="col-6 col-md-3">
+                        <button type="submit" class="btn btn-primary form-control">Delete</button>
+                    </div>
+                    <div class="col-6 col-md-3">
+                        <a asp-controller="Product" asp-action="Index" class="btn btn-outline-secondary form-control">BACK TO LIST</a>
+                    </div>
+                </div>
+
+            </div>
+        </form>
+    </div>
+</div>
