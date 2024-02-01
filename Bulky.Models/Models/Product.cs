@@ -1,4 +1,5 @@
 ﻿using BulkyWeb.Models;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -43,10 +44,14 @@ namespace Bulky.Models.Models
         public double Price100 { get; set; }
 
         // Nav props
+        public int CategoryId { get; set; }
 
-        //[ForeignKey("Category")]
-        //public int CategoryId { get; set; }
-        //public Category Category{ get; set; }
+        [ForeignKey("CategoryId")]
+        [ValidateNever]
+        public Category Category { get; set; }
+
+        [ValidateNever]
+        public string ImageUrl { get; set; }
 
 
 

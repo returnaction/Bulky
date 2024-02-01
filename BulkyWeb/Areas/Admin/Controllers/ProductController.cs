@@ -1,12 +1,14 @@
 ﻿using Bulky.DataAccess.Repository.IRepository;
 using Bulky.Models.Models;
+using Bulky.Models.Models.ViewModels;
 using BulkyWeb.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore.ChangeTracking.Internal;
 
-namespace BulkyWeb.Areas.Customer.Controllers
+namespace BulkyWeb.Areas.Admin.Controllers
 {
-    [Area("Customer")]
+    [Area("Admin")]
     public class ProductController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
@@ -19,26 +21,54 @@ namespace BulkyWeb.Areas.Customer.Controllers
         public IActionResult Index()
         {
             List<Product> products = _unitOfWork.Product.GetAll().ToList();
+
+            
             return View(products);
         }
 
         public IActionResult Create()
         {
-            return View();
+            //IEnumerable<SelectListItem> CategoryList = _unitOfWork.Category
+            //    .GetAll().Select(u => new SelectListItem
+            //    {
+            //        Text = u.Name,
+            //        Value = u.Id.ToString()
+            //    });
+            ////ViewBag.CategoryList = CategoryList;
+            //ViewData["CategoryList"] = CategoryList;
+
+            ProductVM productVM = new()
+            {
+                CategoryList = _unitOfWork.Category.GetAll().Select(u => new SelectListItem
+                {
+                    Text = u.Name,
+                    Value = u.Id.ToString()
+                }),
+                Product = new Product()
+            };
+            return View(productVM);
         }
 
         [HttpPost]
-        public IActionResult Create(Product product)
+        public IActionResult Create(ProductVM obj)
         {
             if (ModelState.IsValid)
             {
-                _unitOfWork.Product.Add(product);
-                _unitOfWork.Save();
+                _unitOfWork.Product.Add(obj.Product);
+                 _unitOfWork.Save();
                 TempData["success"] = "Product was created successfully";
                 return RedirectToAction("Index");
             }
-
-            return View();
+            else
+            {
+                
+                obj.CategoryList = _unitOfWork.Category.GetAll().Select(u => new SelectListItem
+                {
+                    Text = u.Name,
+                    Value = u.Id.ToString()
+                });
+                return View(obj);
+            }
         }
 
         public IActionResult Edit(int? id)
