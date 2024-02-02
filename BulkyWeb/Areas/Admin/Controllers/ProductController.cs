@@ -22,7 +22,7 @@ namespace BulkyWeb.Areas.Admin.Controllers
 
         public IActionResult Index()
         {
-            List<Product> products = _unitOfWork.Product.GetAll().ToList();
+            List<Product> products = _unitOfWork.Product.GetAll(includeProperties:"Category").ToList();
 
             
             return View(products);
@@ -138,6 +138,13 @@ namespace BulkyWeb.Areas.Admin.Controllers
             if (product == null)
                 return NotFound();
 
+            var oldImagePath = Path.Combine(_webHostEnvironment.WebRootPath, product.ImageUrl.TrimStart('\\'));
+
+            if (System.IO.File.Exists(oldImagePath))
+            {
+                System.IO.File.Delete(oldImagePath);
+            }
+
             _unitOfWork.Product.Remove(product);
             _unitOfWork.Save();
             TempData["success"] = "Product was deleted successfully";
@@ -147,6 +154,17 @@ namespace BulkyWeb.Areas.Admin.Controllers
 
 
 
+
+        #region API CALLS
+
+        [HttpGet]
+        public IActionResult GetAll()
+        {
+            List<Product> products = _unitOfWork.Product.GetAll(includeProperties: "Category").ToList();
+            return Json(new { data = products });
+        }
+
+        #endregion
 
     }
 }
